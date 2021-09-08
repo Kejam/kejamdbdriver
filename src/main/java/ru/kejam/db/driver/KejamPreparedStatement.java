@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import ru.kejam.db.driver.model.ResultQuery;
+import ru.kejam.db.driver.resultset.KejamResultSet;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,7 +43,7 @@ public class KejamPreparedStatement  implements PreparedStatement {
             log.info("Got a result with status {}", response.isSuccessful());
             final ResponseBody body = response.body();
             final ResultQuery resultQuery = objectMapper.readValue(body.string(), ResultQuery.class);
-            return new KejamResultSet(List.of(resultQuery.getResult()));
+            return new KejamResultSet(List.of(resultQuery.getResult()), tableName, error, errorReason);
         } catch (IOException e) {
             log.error("Error execute sql request {}", sql, e);
             throw new SQLException("Error execute sql request " + sql, e);

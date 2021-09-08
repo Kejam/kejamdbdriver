@@ -5,7 +5,10 @@ import java.sql.*;
 
 @Slf4j
 public class TestStartApp {
-    public static final String select = "select * from space";
+    public static final String select = "create table start_select(\n" +
+            "      id int,\n" +
+            "      name String\n" +
+            ");";
 
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
